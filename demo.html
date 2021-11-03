@@ -1,0 +1,79 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+  <canvas width="815" height="500" style="border: 1px solid #000;"></canvas>
+  <button id="btn1"> + </button>
+  <button id="btn2"> - </button>
+  <script>
+    let canvas = document.querySelector("canvas");
+    let context = canvas.getContext("2d");
+    let width = 815;
+    let height = 500;
+    let step = 10;
+
+    function resetCanvas() {
+      context.clearRect(0, 0, width, height);
+    }
+
+    function drawnLine(line_list) {
+      context.strokeStyle = "#000"
+      context.lineWidth = 0.3;
+      context.beginPath();
+      context.restore();
+      for (let i = 0, line; i < line_list.length; i++) {
+        line = line_list[i];
+        context.moveTo(...line.start_coor);
+        context.lineTo(...line.end_coor);
+      }
+      context.stroke();
+      context.restore();
+    }
+
+    function drawnGride(step = 10) {
+      let line_step = width / step;
+      let grideArr = [];
+      // y
+      for (let x = 0; x <= width; x += line_step) {
+        //算出中心线
+        grideArr.push({ start_coor: [x, 0], end_coor: [x, height] })
+      }
+      //x
+      let y_c = (height % line_step) / 2;
+      for (let y = y_c; y <= height - y_c; y += line_step) {
+        grideArr.push({ start_coor: [0, y], end_coor: [width, y] })
+      }
+      drawnLine(grideArr)
+    }
+    drawnGride(step);
+    let btn1 = document.querySelector("#btn1");
+    let btn2 = document.querySelector("#btn2");
+    btn1.addEventListener("click", function () {
+      resetCanvas();
+      console.log(step);
+      if (step < 8) {
+        step = 10;
+      } else {
+        step -= 0.5;
+      }
+      drawnGride(step);
+    })
+
+    btn2.addEventListener("click", function () {
+      resetCanvas();
+      if (step > 12) {
+        step = 10;
+      } else {
+        step += 0.5;
+      }
+      drawnGride(step);
+    })
+
+  </script>
+</body>
+
+</html>

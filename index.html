@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container" style="width: 100%; height: 100%; margin: auto;"></div>
+</body>
+
+<script type="text/javascript" src="./CoorCanvas.js"></script>
+<script>
+  let layout = document.querySelector("#container");
+  let canvas = new CoorCanvas(layout, {
+    bgColor: "#FFF",
+    bgGlobalAlpha: 1,
+    isCoorBg: true,
+    eventMove: true,
+    eventScale: true,
+    coorCenter: [0, 0] //默认起始坐标
+  });
+  let t = new CoorCanvas.Point([150, 150], { color: "#FFF", size: 3, storkt: true });
+  canvas.add(t);
+  let l = new CoorCanvas.Line([100, 200], [300, 400], { color: "red" });
+  canvas.add(l);;
+  let text = new CoorCanvas.Text([100, 200], "测试", { color: "#000", size: 10, textPos: "center", rotate: 0 })
+  canvas.add(text);
+  let arc = new CoorCanvas.Arc([100, 30], 10, [7, 15], [170, 8], { color: "red", size: 1 })
+  canvas.add(arc);
+  window.onresize = function () {
+    canvas.onResize();
+  }
+</script>
+
+</html>
